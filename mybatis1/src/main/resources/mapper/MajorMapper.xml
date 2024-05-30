@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--MyBatis的DTD约束-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laurence0.mybatis.mapper.MajorMapper">
+
+    <insert id="insertMajor">
+        insert into major(major_no, major_name)
+        values ("0000", "abcd")
+    </insert>
+
+    <update id="updateMajor">
+        update major
+        set major_name = "abc"
+        where major_no = "0000"
+    </update>
+
+    <delete id="deleteMajor">
+        delete
+        from major
+        where major_no = "0000"
+    </delete>
+
+    <select id="selectOneMajor" resultType="com.laurence0.mybatis.pojo.Major">
+        select *
+        from major
+        where major_no = "0000"
+    </select>
+
+    <select id="selectAllMajor" resultType="com.laurence0.mybatis.pojo.Major">
+        select *
+        from major
+    </select>
+
+
+</mapper>

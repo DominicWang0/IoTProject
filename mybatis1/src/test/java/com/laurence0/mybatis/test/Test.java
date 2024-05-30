@@ -67,4 +67,31 @@ public class Test {
         sqlSession.close();
     }
 
+    @org.junit.Test
+    public void testSqlSessionCache(){
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+        MajorMapper majormapper = sqlSession.getMapper(MajorMapper.class);
+        List<Major> majors1 = majormapper.selectAllMajor();
+        majors1.stream().forEach(System.out::println);
+        majormapper.updateMajor();
+        List<Major> majors2 = majormapper.selectAllMajor();
+        majors2.stream().forEach(System.out::println);
+        sqlSession.close();
+    }
+
+
+    @org.junit.Test
+    public void testSqlSessionFactoryCache() throws IOException{
+        InputStream is= Resources.getResourceAsStream("mybatis-config.xml");
+        SqlSessionFactoryBuilder builder=new SqlSessionFactoryBuilder();
+        SqlSessionFactory sqlsessonfactory=builder.build(is);
+        SqlSession sqlSession1=sqlsessonfactory.openSession(true);
+        SqlSession sqlSession2=sqlsessonfactory.openSession(true);
+        sqlSession1.getMapper(MajorMapper.class).selectAllMajor();
+        sqlSession2.getMapper(MajorMapper.class).updateMajor();
+        sqlSession1.close();
+        sqlSession2.getMapper(MajorMapper.class).selectAllMajor();
+        sqlSession2.close();
+    }
+
 }
